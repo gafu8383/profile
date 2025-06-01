@@ -1,47 +1,76 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kamichitaのプロフィール</title>
-    <style>
-        body {
-            background-color: #1e1e1e;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        .profile {
-            margin-top: 50px;
-        }
-        img {
-            border-radius: 50%;
-            width: 200px;
-            height: 200px;
-            animation: rotate 10s linear infinite;
-        }
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        h1, p {
-            margin: 10px;
-        }
-        a {
-            color: #ff6347;
-            text-decoration: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>通知のご案内</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #1f2937;
+      color: #e5e7eb;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      padding-top: 2rem;
+    }
+    .ice-blade {
+      position: fixed;
+      top: -100%;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 4px;
+      height: 200px;
+      background: linear-gradient(to bottom, #a0f0ff, #6dd5fa, #2980b9);
+      opacity: 0.8;
+      animation: fall 1.2s ease-out forwards;
+      z-index: 40;
+    }
+    @keyframes fall {
+      to {
+        top: 120%;
+        opacity: 0;
+        transform: translateX(-50%) rotate(45deg) scaleX(1.2);
+      }
+    }
+    .ice-blade::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 0 10px #9be7ff, 0 0 20px #b3faff;
+    }
+  </style>
 </head>
 <body>
-    <div class="profile">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAZzoLYMSbwp7dlUvXTrsvmrDIffaXJPKltvmNQ58GHGu_XHyoJLGuC9Q&s=10" alt="Kamichita icon">
-        <h1>名前: kamichita</h1>
-        <p>年齢: 非公開
-        <p>ステータス: 暇</p>
-        <p>趣味: 画像編集、ドッキリ</p>
-    </div>
+
+  <!-- 通知案内セクション -->
+  <section id="notification" class="bg-gradient-to-br from-pink-600 via-red-500 to-yellow-500 text-white py-16 px-6 mt-12 rounded-lg shadow-2xl max-w-3xl mx-auto text-center relative overflow-hidden">
+    <h2 class="text-4xl font-extrabold mb-6 drop-shadow-lg">🔔 通知を許可してください！</h2>
+    <p class="text-xl font-semibold">↘️の方向にある <span class="text-yellow-200 font-bold">赤いベル</span> をクリックして登録をお願いします！</p>
+    <p class="mt-4 text-sm text-pink-100">通知をONにすると、最新情報やイベントのお知らせをいち早く受け取れます。</p>
+
+    <!-- アニメーション装飾（氷刃風） -->
+    <div id="bell-effect" class="absolute inset-0 pointer-events-none"></div>
+    <script>
+      window.addEventListener("load", () => {
+        for (let i = 0; i < 8; i++) {
+          const blade = document.createElement("div");
+          blade.className = "ice-blade";
+          blade.style.left = `${Math.random() * 100}%`;
+          blade.style.animationDelay = `${Math.random()}s`;
+          document.getElementById("bell-effect").appendChild(blade);
+        }
+      });
+    </script>
+  </section>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "5f20d7e7-80f5-4c65-83a7-9b80923ed3e2",
+    });
+  });
+</script>
+
 </body>
 </html>
